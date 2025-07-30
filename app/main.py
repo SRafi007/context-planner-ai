@@ -1,5 +1,6 @@
 import typer
 from app.context_manager import MCPContext
+from app.planner import detect_intent_and_entities
 
 app = typer.Typer()
 ctx = MCPContext()
@@ -22,6 +23,16 @@ def reset():
     """Reset the entire context"""
     ctx.reset()
     typer.echo("Context reset.")
+
+
+@app.command()
+def plan(input: str):
+    """Analyze user input and update MCP context with intent and entities."""
+    intent, entities = detect_intent_and_entities(input)
+    ctx.update("current_intent", intent)
+    ctx.update("entities", entities)
+    typer.echo(f"Intent: {intent}")
+    typer.echo(f"Entities: {entities}")
 
 
 if __name__ == "__main__":
