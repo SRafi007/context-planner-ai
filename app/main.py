@@ -1,6 +1,7 @@
 import typer
 from app.context_manager import MCPContext
 from app.planner import detect_intent_and_entities
+from app.llm_engine import generate_reply
 
 app = typer.Typer()
 ctx = MCPContext()
@@ -33,6 +34,12 @@ def plan(input: str):
     ctx.update("entities", entities)
     typer.echo(f"Intent: {intent}")
     typer.echo(f"Entities: {entities}")
+
+
+@app.command()
+def reply(input: str):
+    response = generate_reply(ctx.context, input)
+    typer.echo(response)
 
 
 if __name__ == "__main__":
