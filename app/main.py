@@ -3,6 +3,12 @@ from app.context_manager import MCPContext
 from app.planner import detect_intent_and_entities
 from app.llm_engine import generate_reply
 from app.executor import handle_intent
+from app.query import search_tasks
+from app.summarizer import generate_summary
+from app.context import ctx, init_llm
+
+init_llm("mistral")
+
 
 app = typer.Typer()
 ctx = MCPContext()
@@ -48,6 +54,20 @@ def execute():
     """Executes the current intent from context."""
     result = handle_intent(ctx.context)
     typer.echo(result)
+
+
+@app.command()
+def summary():
+    """Summarize your upcoming tasks."""
+    result = generate_summary()
+    typer.echo(result)
+
+
+@app.command()
+def search(query: str):
+    """Find matching tasks (e.g., by date or name)."""
+    results = search_tasks(query)
+    typer.echo(results)
 
 
 if __name__ == "__main__":
