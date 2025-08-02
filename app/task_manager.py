@@ -7,15 +7,21 @@ TASK_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 def load_tasks():
     if TASK_FILE.exists():
-        with open(TASK_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-
+        try:
+            with open(TASK_FILE, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                if not content:
+                    return []  # Empty file, return empty list
+                return json.loads(content)
+        except json.JSONDecodeError:
+            # In case file is corrupted, log warning or fallback
+            return []
     return []
 
 
 def save_tasks(tasks):
     with open(TASK_FILE, "w", encoding="utf-8") as f:
-        json.dump(tasks, f, intent=2)
+        json.dump(tasks, f, indent=2)
 
 
 def add_task(task):
