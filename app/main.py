@@ -2,6 +2,7 @@ import typer
 from app.context_manager import MCPContext
 from app.planner import detect_intent_and_entities
 from app.llm_engine import generate_reply
+from app.executor import handle_intent
 
 app = typer.Typer()
 ctx = MCPContext()
@@ -40,6 +41,13 @@ def plan(input: str):
 def reply(input: str):
     response = generate_reply(ctx.context, input)
     typer.echo(response)
+
+
+@app.command()
+def execute():
+    """Executes the current intent from context."""
+    result = handle_intent(ctx.context)
+    typer.echo(result)
 
 
 if __name__ == "__main__":
