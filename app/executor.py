@@ -1,3 +1,4 @@
+# app/executor
 from app.task_manager import add_task, list_all_tasks, cancel_task_by_title
 
 
@@ -28,3 +29,8 @@ def handle_add_task(context: dict) -> str:
     }
     add_task(task)
     return f"Task '{task['title']}' added on {task['date']} at {task['time']}."
+
+
+def execute_intent(context: dict) -> str:  # NEW
+    """Public wrapper for compatibility with API."""
+    return handle_intent(context)
