@@ -1,3 +1,4 @@
+# app/ui/main_cli
 import typer
 from app.context.context_manager import MCPContext
 from app.core.planner import detect_intent_and_entities

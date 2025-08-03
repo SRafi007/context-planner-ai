@@ -1,6 +1,20 @@
 # Basic intent and entity detection logic.
 import re
-from utils.date_parser import parse_natural_date
+from utils.date_parser import parse_natural_date, normalize_time
+
+
+def find_task_conflicts(date: str, time: str) -> list:
+    from app.core.task_manager import load_tasks
+
+    tasks = load_tasks()
+
+    norm_time = normalize_time(time)
+    conflicts = []
+
+    for task in tasks:
+        if task.get("date") == date and normalize_time(task.get("time")) == norm_time:
+            conflicts.append(task)
+    return conflicts
 
 
 def detect_intent_and_entities(user_input: str):

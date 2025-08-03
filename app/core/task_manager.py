@@ -49,3 +49,17 @@ def cancel_task_by_title(title):
 
     save_tasks(new_tasks)
     return f"Cancelled task: {title}"
+
+
+# --------
+def find_task_conflicts(date: str, time: str) -> list:
+    from app.context.memory import load_json
+
+    tasks = load_json("data/tasks.json")
+    conflicts = []
+
+    for task in tasks:
+        if task.get("date") == date and task.get("time") == time:
+            conflicts.append(task)
+
+    return conflicts

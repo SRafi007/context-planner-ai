@@ -1,25 +1,65 @@
 import json
-from pathlib import Path
+import os
+from datetime import datetime
+from typing import List, Dict
 
-MEMORY_FILE = Path("data/user_memory.json")
-
-
-def load_memory() -> dict:
-
-    if MEMORY_FILE.exists():
-        return json.loads(MEMORY_FILE.read_text(encoding="utf-8"))
-    return {}
+SHORT_TERM_FILE = "data/short_term_memory.json"
+LONG_TERM_FILE = "data/long_term_memory.json"
 
 
-def save_memory(data: dict):
-    MEMORY_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
+# ----------short memory
+def load_short_term_memory(limit: int = 10) -> List[Dict]:
+    if not os.path.exists(SHORT_TERM_FILE):
+        return []
+
+    with open(SHORT_TERM_FILE, "r", encoding="utf-8") as f:
+        memory = json.load(f)
+    return memory[-limit:]  # Only return the most recent entries
 
 
-def update_memory(key: str, value):
-    data = load_memory()
-    data[key] == value
-    save_memory(data)
+def save_to_short_term_memory(entry: dict):
+    memory = load_short_term_memory(limit=1000)  # Load more for saving
+
+    entry["timestamp"] = datetime.now().isoformat()
+    memory.append(entry)
+    with open(SHORT_TERM_FILE, "w", encoding="utf-8") as f:
+        json.dump(memory, f, indent=2)
 
 
-def get_memory(key: str, default=None):
-    return load_memory().get(key, default)
+# ---------=long memory
+
+
+def long_term_memory() -> List[Dict]:
+    if not os.path.exists(LONG_TERM_FILE):
+        return []
+    with open(LONG_TERM_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def add_to_long_term_memory(summary: str, tags: List[str]):
+    memory = long_term_memory()
+    memory.append({"summary": summary, "tags": tags})
+    with open(LONG_TERM_FILE, "w", encoding="utf-8") as f:
+        json.dump(memory, f, indent=2)
+
+
+def query_long_term_memory(Keywords: List[str]) -> List[str]:
+
+    memory = long_term_memory()
+
+    matches = [
+        m["summary"]
+        for m in memory
+        if any(tag in Keywords for tag in m.get("tags", []))
+    ]
+    return matches
+
+
+# -----summarize rexent memory
+
+
+def summarize_short_term_memory() -> str:
+    """Stub for now – later we’ll use LLM summarization."""
+    recent = load_short_term_memory(limit=5)
+    summaries = [f"{item['input']} -> {item.get('intent')}" for item in recent]
+    return " | ".join(summaries)

@@ -2,8 +2,8 @@
   "user_name": "Rafi",
   "current_intent": "add_task",
   "entities": {
-    "date": "2025-07-31",
-    "tiem": "04:00",
-    "task": "a meeting with sarah today at 4am"
+    "date": "2025-08-04",
+    "task": "a meeting  with sarah  today at 4am",
+    "time": "04:00"
   }
 }

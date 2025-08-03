@@ -1,6 +1,18 @@
 from datetime import datetime, timedelta
 
 
+def normalize_time(time_str: str) -> str:
+    try:
+        return datetime.strptime(time_str.strip().lower(), "%I:%M %p").strftime("%H:%M")
+    except ValueError:
+        try:
+            return datetime.strptime(time_str.strip().lower(), "%I %p").strftime(
+                "%H:%M"
+            )
+        except ValueError:
+            return time_str  # fallback to original
+
+
 def parse_natural_date(text):
     text = text.lower()
     today = datetime.today()
