@@ -1,5 +1,5 @@
 # app/executor
-from app.task_manager import add_task, list_all_tasks, cancel_task_by_title
+from app.core.task_manager import add_task, list_all_tasks, cancel_task_by_title
 
 
 def handle_intent(context: dict) -> str:

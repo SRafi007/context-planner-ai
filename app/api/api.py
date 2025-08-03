@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Body
-from app.context import ctx, init_llm
-from app.llm_engine import generate_reply
-from app.executor import execute_intent
-from app.query import search_tasks
-from app.summarizer import generate_summary
+from app.context.context import ctx, init_llm
+from app.llm.llm_engine import generate_reply
+from app.core.executor import execute_intent
+from app.core.query import search_tasks
+from app.llm.summarizer import generate_summary
 
 app = FastAPI()
 init_llm("mistral")

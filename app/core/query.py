@@ -1,4 +1,4 @@
-from app.task_manager import load_tasks
+from app.core.task_manager import load_tasks
 import re
 
 

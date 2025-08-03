@@ -4,12 +4,13 @@ import sys
 import os
 
 # 👇 Add project root to Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 import streamlit as st
 from app.context.context import ctx, init_llm
 from app.llm.llm_engine import generate_reply
 from app.core.executor import handle_intent
+from app.core.query import search_tasks
 from app.llm.summarizer import generate_summary
 
 

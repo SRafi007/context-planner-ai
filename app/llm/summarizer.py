@@ -1,5 +1,5 @@
-from app.task_manager import load_tasks
-from app.context import ctx
+from app.core.task_manager import load_tasks
+from app.context.context import ctx
 
 
 def generate_summary() -> str:

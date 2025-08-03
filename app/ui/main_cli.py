@@ -1,11 +1,11 @@
 import typer
-from app.context_manager import MCPContext
-from app.planner import detect_intent_and_entities
-from app.llm_engine import generate_reply
-from app.executor import handle_intent
-from app.query import search_tasks
-from app.summarizer import generate_summary
-from app.context import ctx, init_llm
+from app.context.context_manager import MCPContext
+from app.core.planner import detect_intent_and_entities
+from app.llm.llm_engine import generate_reply
+from app.core.executor import handle_intent
+from app.core.query import search_tasks
+from app.llm.summarizer import generate_summary
+from app.context.context import ctx, init_llm
 
 init_llm("mistral")
 
