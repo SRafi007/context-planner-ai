@@ -7,10 +7,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import streamlit as st
-from app.context import ctx, init_llm
-from app.llm_engine import generate_reply
-from app.executor import handle_intent
-from app.summarizer import generate_summary
+from app.context.context import ctx, init_llm
+from app.llm.llm_engine import generate_reply
+from app.core.executor import handle_intent
+from app.llm.summarizer import generate_summary
 
 
 st.set_page_config(page_title="Intelligent Daily Planner", layout="centered")
